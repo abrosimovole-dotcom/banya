@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Вход | Баня</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    color: white;
+
+    background:
+        radial-gradient(circle at 20% 30%, #003d1f, transparent 40%),
+        radial-gradient(circle at 80% 70%, #022d18, transparent 50%),
+        #000;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.box {
+    background: rgba(255,255,255,0.05);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+}
+
+input {
+    width: 250px;
+    padding: 12px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+button {
+    padding: 12px 25px;
+    border-radius: 10px;
+    border: none;
+    background: #00aa55;
+    color: white;
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Вход</h2>
+
+    <input id="login" placeholder="Логин"><br>
+    <input id="pass" type="password" placeholder="Пароль"><br>
+
+    <button onclick="loginUser()">Войти</button>
+</div>
+
+<script>
+function loginUser() {
+    let login = document.getElementById("login").value;
+    let pass = document.getElementById("pass").value;
+
+    if (!login || !pass) {
+        alert("Введите данные");
+        return;
+    }
+
+    localStorage.setItem("currentUser", login);
+
+    // 👉 переход
+    window.location.href = "dashboard.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Баня на колесах</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial;
+    color: white;
+
+    background:
+        radial-gradient(circle at 10% 20%, #003d1f, transparent 40%),
+        radial-gradient(circle at 80% 10%, #022d18, transparent 50%),
+        radial-gradient(circle at 30% 80%, #064d2b, transparent 50%),
+        #000;
+}
+
+/* HEADER */
+header {
+    height: 100vh;
+    background:
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.9)),
+        url('7c3aea83-8fba-43a3-87b0-8109d30dcd21.avif') no-repeat center/cover;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    animation: fadeIn 2s ease;
+}
+
+header h1 {
+    font-size: 45px;
+    background: rgba(0,0,0,0.5);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0,255,120,0.2);
+}
+
+/* СЕКЦИИ */
+.section {
+    padding: 70px 20px;
+    text-align: center;
+    animation: fadeUp 1.5s ease;
+}
+
+/* ТЕКСТ */
+.desc {
+    max-width: 700px;
+    margin: auto;
+    line-height: 1.6;
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+/* ЦЕНЫ */
+.pricing {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+}
+
+.card {
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 20px;
+    width: 200px;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0,255,100,0.3);
+}
+
+/* ФОРМА */
+.form-box {
+    margin-top: 30px;
+    background: rgba(255,255,255,0.05);
+    padding: 25px;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    display: inline-block;
+}
+
+input, textarea {
+    width: 90%;
+    padding: 12px;
+    margin: 10px;
+    border-radius: 10px;
+    border: none;
+}
+
+/* КНОПКА */
+button {
+    padding: 12px 25px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(45deg, #00ff88, #00aa55);
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* СПИСОК */
+.booking-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.booking-item {
+    width: 320px;
+    background: rgba(255,255,255,0.05);
+    margin: 10px;
+    padding: 15px;
+    border-radius: 15px;
+    backdrop-filter: blur(8px);
+}
+
+.delete {
+    background: crimson;
+    margin-top: 10px;
+}
+
+/* УВЕДОМЛЕНИЕ */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #00aa55;
+    padding: 15px 20px;
+    border-radius: 12px;
+    display: none;
+}
+
+/* АНИМАЦИИ */
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🔥 Баня, которая приезжает к тебе 🔥</h1>
+</header>
+
+<section class="section">
+    <h2>Почему это круто?</h2>
+    <p class="desc">
+        Наша баня на колесах — это настоящий уровень отдыха.  
+        Мы привозим горячий пар, уют и атмосферу прямо к тебе, куда угодно: на дачу, природу или к дому.  
+        Это идеальный способ расслабиться, провести время с друзьями и получить максимум удовольствия.  
+        Удобно, быстро, атмосферно и самое главное — намного дешевле, чем стационарные бани.
+    </p>
+</section>
+
+<section class="section">
+    <h2>💰 Цены</h2>
+
+    <div class="pricing">
+        <div class="card">
+            <h3>1 час</h3>
+            <h2>500 грн</h2>
+        </div>
+        <div class="card">
+            <h3>3 часа</h3>
+            <h2>850 грн</h2>
+        </div>
+        <div class="card">
+            <h3>5 часов</h3>
+            <h2>1200 грн</h2>
+        </div>
+    </div>
+</section>
+
+<section class="section">
+    <h2>📅 Работаем</h2>
+    <p>Пн–Чт | 10:00 – 22:00</p>
+
+    <h2>📌 Запись</h2>
+
+    <div class="form-box">
+        <input type="date" id="date"><br>
+        <input type="time" id="time"><br>
+        <textarea id="comment" placeholder="Пожелания"></textarea><br>
+        <button onclick="book()">Записаться</button>
+    </div>
+
+    <h3>Ваши записи:</h3>
+    <div id="list" class="booking-list"></div>
+</section>
+
+<div id="toast" class="toast"></div>
+
+<script>
+let user = localStorage.getItem("currentUser") || "guest";
+
+function showToast(text) {
+    let t = document.getElementById("toast");
+    t.innerText = text;
+    t.style.display = "block";
+    setTimeout(() => t.style.display = "none", 5000);
+}
+
+date.addEventListener("change", function() {
+    let d = new Date(this.value);
+    let day = d.getDay();
+    if (day < 1 || day > 4) {
+        showToast("Нельзя выбрать эту дату");
+        this.value = "";
+    }
+});
+
+time.addEventListener("change", function() {
+    let hour = parseInt(this.value.split(":")[0]);
+    if (hour < 10 || hour >= 22) {
+        showToast("Нельзя выбрать это время (10:00–22:00)");
+        this.value = "";
+    }
+});
+
+function book() {
+    let d = date.value;
+    let t = time.value;
+    let c = comment.value;
+
+    if (!d || !t) {
+        showToast("Выбери дату и время");
+        return;
+    }
+
+    let bookings = JSON.parse(localStorage.getItem(user+"_book")) || [];
+    bookings.push({date:d, time:t, comment:c});
+
+    localStorage.setItem(user+"_book", JSON.stringify(bookings));
+    render();
+}
+
+function deleteBooking(i) {
+    let bookings = JSON.parse(localStorage.getItem(user+"_book")) || [];
+    bookings.splice(i, 1);
+    localStorage.setItem(user+"_book", JSON.stringify(bookings));
+    render();
+}
+
+function render() {
+    let list = document.getElementById("list");
+    list.innerHTML = "";
+
+    let bookings = JSON.parse(localStorage.getItem(user+"_book")) || [];
+
+    bookings.forEach((b, i) => {
+        let div = document.createElement("div");
+        div.className = "booking-item";
+
+        div.innerHTML = `
+            <b>${b.date}</b><br>
+            ⏰ ${b.time}<br>
+            💬 ${b.comment || "без пожеланий"}<br>
+            <button class="delete" onclick="deleteBooking(${i})">Удалить</button>
+        `;
+
+        list.appendChild(div);
+    });
+}
+
+render();
+</script>
+
+</body>
+</html>
